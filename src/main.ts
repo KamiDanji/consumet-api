@@ -33,7 +33,9 @@ export const tmdbApi = process.env.TMDB_KEY && process.env.TMDB_KEY;
 
   await fastify.register(FastifyCors, {
     origin: '*',
-    methods: 'GET',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   });
 
   if (process.env.NODE_ENV === 'DEMO') {
@@ -145,7 +147,7 @@ export const tmdbApi = process.env.TMDB_KEY && process.env.TMDB_KEY;
   try {
     fastify.get('/', (_, rp) => {
       rp.status(200).send(
-        `Welcome to SugoiStream consumet api! 🎉 \n${process.env.NODE_ENV === 'DEMO'
+        `Welcome to the consumet api for SugoiStream! 🎉 \n${process.env.NODE_ENV === 'DEMO'
           ? 'This is a demo of the api. You should only use this for testing purposes.'
           : ''
         }`,
